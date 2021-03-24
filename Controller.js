@@ -4,11 +4,11 @@ export class Controller {
       this.view = view
   
       // Explicit this binding
-      this.model.bindTodoListChanged(this.onTodoListChanged)
-      this.view.bindAddTodo(this.handleAddTodo)
-      this.view.bindEditTodo(this.handleEditTodo)
-      this.view.bindDeleteTodo(this.handleDeleteTodo)
-      this.view.bindToggleTodo(this.handleToggleTodo)
+      this.model.subscribeTodoListChanged(this.onTodoListChanged)
+      this.view.subscribeAddTodo(this.handleAddTodo)
+      this.view.subscribeEditTodo(this.handleEditTodo)
+      this.view.subscribeDeleteTodo(this.handleDeleteTodo)
+      this.view.subscribeToggleTodo(this.handleToggleTodo)
   
       // Display initial todos
       this.onTodoListChanged(this.model.todos)
