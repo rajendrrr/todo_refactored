@@ -3,7 +3,7 @@ export class Model {
       this.todos = JSON.parse(localStorage.getItem('todos')) || []
     }
   
-    bindTodoListChanged(callback) {
+    subscribeTodoListChanged(callback) {
       this.onTodoListChanged = callback
     }
   
