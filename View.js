@@ -39,18 +39,23 @@ export class View {
   
       return element
     }
-  
-    displayTodos(todos) {
-      // Delete all nodes
+    deleteList(){
       while (this.todoList.firstChild) {
         this.todoList.removeChild(this.todoList.firstChild)
       }
+    }
+    showNothingToDo(){
+      const p = this.createElement('p')
+      p.textContent = 'Nothing to do! Add a task?'
+      this.todoList.append(p)
+    }
+    displayTodos(todos) {
+      // Delete all nodes
+      this.deleteList()
   
       // Show default message
       if (todos.length === 0) {
-        const p = this.createElement('p')
-        p.textContent = 'Nothing to do! Add a task?'
-        this.todoList.append(p)
+        this.showNothingToDo()
       } else {
         // Create nodes
         todos.forEach(todo => {
@@ -94,7 +99,7 @@ export class View {
       })
     }
   
-    bindAddTodo(handler) {
+    subscribeAddTodo(handler) {
       this.form.addEventListener('submit', event => {
         event.preventDefault()
   
@@ -105,7 +110,7 @@ export class View {
       })
     }
   
-    bindDeleteTodo(handler) {
+    subscribeDeleteTodo(handler) {
       this.todoList.addEventListener('click', event => {
         if (event.target.className === 'delete') {
           const id = parseInt(event.target.parentElement.id)
@@ -115,7 +120,7 @@ export class View {
       })
     }
   
-    bindEditTodo(handler) {
+    subscribeEditTodo(handler) {
       this.todoList.addEventListener('focusout', event => {
         if (this._temporaryTodoText) {
           const id = parseInt(event.target.parentElement.id)
@@ -126,7 +131,7 @@ export class View {
       })
     }
   
-    bindToggleTodo(handler) {
+    subscribeToggleTodo(handler) {
       this.todoList.addEventListener('change', event => {
         if (event.target.type === 'checkbox') {
           const id = parseInt(event.target.parentElement.id)
