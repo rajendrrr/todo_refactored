@@ -1,0 +1,16 @@
+{
+  "name": "mvc-master",
+  "version": "1.0.0",
+  "description": "[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)",
+  "main": "Controller.js",
+  "dependencies": {
+    "http-server": "^0.12.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "http-server ./",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
