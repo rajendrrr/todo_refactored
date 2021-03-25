@@ -1,7 +1,9 @@
+import addTodo from './addTodo.js'
+
 export class View {
     constructor() {
       this.app = this.getElement('#root')
-      this.form = this.createElement('form')
+      this.form = this.createElement('form' , 'sticky')
       this.input = this.createElement('input')
       this.input.type = 'text'
       this.input.placeholder = 'Add todo'
@@ -16,6 +18,7 @@ export class View {
   
       this._temporaryTodoText = ''
       this._initLocalListeners()
+      this.todoList.addEventListener("addTodo" , addTodo)
     }
   
     get _todoText() {
@@ -52,43 +55,23 @@ export class View {
     displayTodos(todos) {
       // Delete all nodes
       this.deleteList()
-  
-      // Show default message
-      if (todos.length === 0) {
-        this.showNothingToDo()
-      } else {
-        // Create nodes
-        todos.forEach(todo => {
-          const li = this.createElement('li')
-          li.id = todo.id
-  
-          const checkbox = this.createElement('input')
-          checkbox.type = 'checkbox'
-          checkbox.checked = todo.complete
-  
-          const span = this.createElement('span')
-          span.contentEditable = true
-          span.classList.add('editable')
-  
-          if (todo.complete) {
-            const strike = this.createElement('s')
-            strike.textContent = todo.text
-            span.append(strike)
-          } else {
-            span.textContent = todo.text
-          }
-  
-          const deleteButton = this.createElement('button', 'delete')
-          deleteButton.textContent = 'Delete'
-          li.append(checkbox, span, deleteButton)
-  
-          // Append nodes
-          this.todoList.append(li)
-        })
+
+      if (todos.length) {
+        todos.forEach(todo => {this.todoList.dispatchEvent(new CustomEvent("addTodo",{
+            detail:{
+              id: todo.id,
+              text: todo.text,
+              complete: todo.complete,
+              todoList: this.todoList
+            }}))})
+      }
+      else{
+        alert("todo can't be blank")
       }
   
-      // Debugging
-      // console.log(todos)
+
+
+
     }
   
     _initLocalListeners() {
@@ -107,12 +90,16 @@ export class View {
           handler(this._todoText)
           this._resetInput()
         }
+        else{
+          alert("todo can't be blank")
+        }
       })
     }
   
     subscribeDeleteTodo(handler) {
       this.todoList.addEventListener('click', event => {
         if (event.target.className === 'delete') {
+          alert("are you sure ?")
           const id = parseInt(event.target.parentElement.id)
   
           handler(id)
