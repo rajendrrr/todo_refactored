@@ -6,19 +6,21 @@ export class Model {
     subscribeTodoListChanged(callback) {
       this.onTodoListChanged = callback
     }
+    //unsubsribe todo list
   
     _commit(todos) {
       this.onTodoListChanged(todos)
       localStorage.setItem('todos', JSON.stringify(todos))
-    }
+    }//this.ontodolistchanged will take an array of actions
   
     addTodo(todoText) {
+      const length = this.todos.length
       const todo = {
-        id: this.todos.length > 0 ? this.todos[this.todos.length - 1].id + 1 : 1,
+        id: new Date().getTime(),
         text: todoText,
         complete: false,
       }
-  
+      
       this.todos.push(todo)
   
       this._commit(this.todos)
@@ -31,11 +33,11 @@ export class Model {
   
       this._commit(this.todos)
     }
-  
     deleteTodo(id) {
       this.todos = this.todos.filter(todo => todo.id !== id)
   
       this._commit(this.todos)
+      
     }
   
     toggleTodo(id) {
@@ -45,5 +47,4 @@ export class Model {
   
       this._commit(this.todos)
     }
-  }
-  
+  }  
