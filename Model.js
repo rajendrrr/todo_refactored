@@ -1,17 +1,17 @@
 export class Model {
     constructor() {
-      this.todos = JSON.parse(localStorage.getItem('todos')) || []
+      this.todos = []
     }
   
     subscribeTodoListChanged(callback) {
       this.onTodoListChanged = callback
     }
     //unsubsribe todo list
-  
+    
     _commit(todos) {
       this.onTodoListChanged(todos)
-      localStorage.setItem('todos', JSON.stringify(todos))
-    }//this.ontodolistchanged will take an array of actions
+      
+    }
   
     addTodo(todoText) {
       const length = this.todos.length
@@ -46,5 +46,13 @@ export class Model {
       )
   
       this._commit(this.todos)
+    }
+
+    // colorChange(){
+    //   console.log(5)
+    // }
+    unsubscribeTodo(){
+      this.todos = [];
+      
     }
   }  
