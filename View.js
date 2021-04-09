@@ -10,12 +10,14 @@ export class View {
       this.input.name = 'todo'
       this.submitButton = this.createElement('button')
       this.submitButton.textContent = 'Submit'
-      this.form.append(this.input, this.submitButton)
+      this.deleteAll = this.createElement('button')
+      this.deleteAll.textContent = 'Delete All'
+      this.form.append(this.input, this.submitButton , this.deleteAll)
       this.title = this.createElement('h1')
       this.title.textContent = 'Todos'
       this.todoList = this.createElement('ul', 'todo-list')
       this.app.append(this.title, this.form, this.todoList)
-  
+      
       this._temporaryTodoText = ''
       this._initLocalListeners()
       this.todoList.addEventListener("addTodo" , addTodo)
@@ -65,9 +67,7 @@ export class View {
               todoList: this.todoList
             }}))})
       }
-      else{
-        alert("todo can't be blank")
-      }
+      
   
 
 
@@ -83,15 +83,16 @@ export class View {
     }
   
     subscribeAddTodo(handler) {
-      this.form.addEventListener('submit', event => {
+      this.submitButton.addEventListener('click', event => {
         event.preventDefault()
   
         if (this._todoText) {
           handler(this._todoText)
           this._resetInput()
+          
         }
         else{
-          alert("todo can't be blank")
+          alert("todo can't be blank 1")
         }
       })
     }
@@ -127,5 +128,12 @@ export class View {
         }
       })
     }
+   unsubscribeList(handler){
+     this.deleteAll.addEventListener('click' , event => {
+       alert("are you sure you want to delete all ?")
+       this.deleteList();
+       handler();
+     })
+   }
   }
   
