@@ -4,12 +4,14 @@ export class Controller {
       this.view = view
   
       // Explicit this binding
+      // const arrAdd = [this.handleAddTodo , this.handleColorChange]
       this.model.subscribeTodoListChanged(this.onTodoListChanged)
       this.view.subscribeAddTodo(this.handleAddTodo)
+      // this.view.subscribeAddTodo(arrAdd)
       this.view.subscribeEditTodo(this.handleEditTodo)
       this.view.subscribeDeleteTodo(this.handleDeleteTodo)
       this.view.subscribeToggleTodo(this.handleToggleTodo)
-  
+      this.view.unsubscribeList(this.unsubscribeAll)
       // Display initial todos
       this.onTodoListChanged(this.model.todos)
     }
@@ -32,6 +34,12 @@ export class Controller {
   
     handleToggleTodo = id => {
       this.model.toggleTodo(id)
+    }
+    // handleColorChange = () => {
+    //   this.model.colorChange()
+    // }
+    unsubscribeAll = () => {
+      this.model.unsubscribeTodo()
     }
   }
   
